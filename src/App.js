@@ -14,6 +14,7 @@ export default function App() {
   const episodes = seasons[selectedSeason] || [];
 
   useEffect(() => {
+    //moved the axios.get into another file, so that it would become async (when useEffect happens, it has to reach outside of the useEffect asynchronously to grab the get, and then comes back here for the .then)
     fetchShow().then(res => {
       setShow(res.data);
       setSeasons(formatSeasons(res.data._embedded.episodes));
