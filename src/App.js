@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Dropdown from "react-dropdown";
 import parse from "html-react-parser";
-import fetchShow from "./api/fetchShow";
+import { fetchShow } from "./api/fetchShow";
 import { formatSeasons } from "./utils/formatSeasons";
 import Episodes from "./components/Episodes";
 import "./styles.css";
@@ -14,8 +14,9 @@ export default function App() {
   const episodes = seasons[selectedSeason] || [];
 
   useEffect(() => {
-    //moved the axios.get into another file, so that it would become async (when useEffect happens, it has to reach outside of the useEffect asynchronously to grab the get, and then comes back here for the .then)
+    // fetchShow &&
     fetchShow().then(res => {
+      console.log("App | Res:", res);
       setShow(res.data);
       setSeasons(formatSeasons(res.data._embedded.episodes));
     });

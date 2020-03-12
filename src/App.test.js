@@ -1,12 +1,25 @@
 import React from "react";
+import "@testing-library/jest-dom/extend-expect";
 import {
   render,
+  cleanup,
+  wait,
   fireEvent,
   waitForElement,
-  wait
+  getByTestId,
+  getByText,
+  queryByText
 } from "@testing-library/react";
-
-import fetchShow from "./api/fetchShow";
 import App from "./App";
 
-jest.mock("./api/fetshShow");
+import { fetchShow as mockFetchShow } from "./api/fetchShow";
+
+jest.mock("./api/fetchShow.js");
+
+test("it works with the API", async () => {
+  const { getByText } = render(<App />);
+
+  const episodeNode = await waitForElement(() => getByText(/stranger things/i));
+
+  expect(episodeNode).toBeVisible();
+});
